@@ -7,6 +7,7 @@ Everything you need to get Nexvoka into a Git repo and running.
 ```
 nexvoka/
 ├── prototype/index.html      ← the working prototype (open in a Claude artifact)
+│   └── index-v01-backup.html  ← previous version, kept for reference
 ├── server/                   ← real multi-API orchestrator (Node/Express)
 │   ├── src/index.js
 │   ├── package.json
@@ -60,6 +61,57 @@ npm run dev
 Server starts on `http://localhost:3001`. Health check: `curl http://localhost:3001/health`.
 
 The `/api/round` endpoint streams each AI's response back over SSE (Server-Sent Events), so the frontend can show each council member as it finishes.
+
+## 4b. Database setup
+
+The schema lives in the repo as a migration — not hand-built in a dashboard. That way any environment can be recreated from scratch.
+
+**Ozzie (once):** create the Supabase project under your own account, then invite Charles as a member. The account stays yours; access is granted.
+
+**Charles (dev):** create your own separate free Supabase project as a sandbox. You'll be dropping and recreating tables while building — don't do that in the shared one.
+
+Run the migration:
+
+```bash
+# Option A — psql
+psql "$DATABASE_URL" -f server/migrations/001_init.sql
+
+# Option B — paste server/migrations/001_init.sql into the Supabase SQL editor
+```
+
+What it creates: `workspaces`, `members`, `projects`, `knowledge_items`, `sessions`, `rounds`, `messages`, `agent_briefs`, `documents` — plus row-level security scoping every table to the caller's workspace. See `docs/DATA_MODEL.md` for the reasoning and the API surface that sits on top.
+
+Schema changes go in **new** files (`002_*.sql`, `003_*.sql`), never by editing `001_init.sql` after it's been run somewhere.
+
+## 4c. API keys — who holds what
+
+**Never commit a key.** `.env` is gitignored; keep it that way.
+
+| Key | Who | Where it lives |
+|---|---|---|
+| Anthropic / OpenAI / Google (dev) | Charles's own keys | his local `.env` |
+| Anthropic / OpenAI / Google (prod) | Ozzie's keys | Railway env vars only |
+| Database connection string | shared | password manager, not chat/email |
+
+Charles using his own dev keys matters for two reasons: your production quota doesn't get burned by debugging loops, and per-key usage tells you what's actually costing money. Dev spend on these APIs is small.
+
+If a key ever gets pasted into a chat, email, or commit — rotate it. Don't reason about whether it was exposed; just rotate.
+
+
+## 4b. Set up the database (Charles does this)
+
+The schema lives in the repo as a migration — never hand-built in a dashboard.
+
+**Ozzie creates the Supabase project** (so the account and data stay with the business), then invites Charles as a member.
+
+**Charles then:**
+1. Creates his own free Supabase project as a dev sandbox
+2. Opens Supabase → SQL Editor → pastes `server/migrations/001_init.sql` → Run
+3. Adds `SUPABASE_URL` and `SUPABASE_SERVICE_KEY` to his local `.env`
+
+The migration creates workspaces, members, projects, knowledge_items, sessions, rounds, messages, agent_briefs, documents — plus row-level security scoped by workspace, so no tenant can ever read another's data.
+
+Schema changes after this go in new files (`002_*.sql`, `003_*.sql`), never by editing 001.
 
 ## 5. Deploy (when ready)
 

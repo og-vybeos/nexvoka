@@ -21,9 +21,11 @@ nexvoka/
 ├── prototype/        # Single-file HTML prototype (Claude plays all voices)
 │   └── index.html
 ├── server/           # Node.js/Express orchestrator (real multi-API backend)
-│   └── src/index.js
+│   ├── src/index.js
+│   └── migrations/001_init.sql   # Postgres schema + row-level security
 ├── docs/
 │   ├── ARCHITECTURE.md
+│   ├── DATA_MODEL.md     # Projects / Chats / Knowledge spec
 │   └── PRODUCT.md
 └── README.md
 ```
@@ -46,8 +48,10 @@ Deploy target: **Railway** (persistent Express server + PostgreSQL add-on).
 ## Roadmap
 
 - [x] Prototype: council rounds, modes, synthesis, verdict, document compile
+- [x] Prototype: Projects sidebar, sessions per project, two-tier knowledge layer
 - [ ] Server: real Anthropic + OpenAI + Google API fan-out with streaming
-- [ ] Auth + saved sessions (Supabase or Railway Postgres)
+- [x] Database schema + RLS migration (`server/migrations/001_init.sql`)
+- [ ] Auth + saved sessions wired to the schema
 - [ ] VEO integration (available now via Gemini API / Vertex AI)
 - [ ] NotebookLM integration (waiting on public API — enterprise-only today)
 - [ ] Cowork delivery hooks

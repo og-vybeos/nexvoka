@@ -177,6 +177,210 @@ body {
   overflow: hidden;
 }
 
+/* ───────── Projects sidebar ───────── */
+.sidebar {
+  width: 250px;
+  border-right: 1px solid var(--line);
+  background: #FBFAF7;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.sidebar-section { padding: 16px 14px; overflow-y: auto; }
+.sidebar-section.projects { flex: 1; border-bottom: 1px solid var(--line); }
+.sidebar-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.sidebar-head span {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+}
+.sidebar-add {
+  width: 22px; height: 22px;
+  border-radius: 6px;
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+  color: var(--ink-soft);
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+}
+.sidebar-add:hover { border-color: var(--brand); color: var(--brand); }
+
+.project {
+  border-radius: 10px;
+  margin-bottom: 3px;
+  overflow: hidden;
+}
+.project-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.12s;
+  user-select: none;
+}
+.project-row:hover { background: var(--brand-soft); }
+.project.active > .project-row { background: var(--brand-soft); }
+.project-caret {
+  font-size: 9px;
+  color: var(--muted);
+  transition: transform 0.15s;
+  width: 10px;
+  flex-shrink: 0;
+}
+.project.open > .project-row .project-caret { transform: rotate(90deg); }
+.project-icon { font-size: 13px; flex-shrink: 0; }
+.project-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.project-count {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  color: var(--muted);
+  background: var(--surface);
+  padding: 1px 6px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+}
+.chats { display: none; padding: 2px 0 6px 22px; }
+.project.open .chats { display: block; }
+.chat-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.12s;
+}
+.chat-row:hover { background: var(--brand-soft); }
+.chat-row.active { background: var(--brand); }
+.chat-row.active .chat-name { color: #fff; }
+.chat-row.active .chat-dot { background: #fff; }
+.chat-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--line-strong);
+  flex-shrink: 0;
+}
+.chat-name {
+  font-size: 12px;
+  color: var(--ink-soft);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.new-chat-row {
+  display: flex; align-items: center; gap: 7px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 12px;
+  transition: all 0.12s;
+}
+.new-chat-row:hover { background: var(--brand-soft); color: var(--brand); }
+
+/* Knowledge panel */
+.sidebar-section.knowledge { flex-shrink: 0; max-height: 300px; }
+.know-scope {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 10px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 3px;
+}
+.know-scope button {
+  flex: 1;
+  padding: 5px 8px;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.12s;
+}
+.know-scope button.active { background: var(--brand); color: #fff; }
+.know-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 9px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  margin-bottom: 5px;
+  font-size: 12px;
+}
+.know-item .ki-icon { font-size: 12px; flex-shrink: 0; }
+.know-item .ki-name { flex: 1; color: var(--ink-soft); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.know-item .ki-scope {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+.ki-scope.global { background: var(--verdict-soft); color: var(--verdict); border: 1px solid var(--verdict-line); }
+.ki-scope.project { background: var(--brand-soft); color: var(--brand); border: 1px solid var(--brand-line); }
+.know-add {
+  width: 100%;
+  padding: 7px;
+  border: 1px dashed var(--line-strong);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.12s;
+  margin-top: 2px;
+}
+.know-add:hover { border-color: var(--brand); color: var(--brand); }
+.know-hint {
+  font-size: 10.5px;
+  color: var(--muted);
+  font-style: italic;
+  font-family: 'Fraunces', serif;
+  line-height: 1.4;
+  margin-top: 8px;
+}
+.context-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: var(--brand-soft);
+  border: 1px solid var(--brand-line);
+  font-size: 11px;
+  color: var(--brand);
+  margin-bottom: 10px;
+}
+.context-chip .cc-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--brand); }
+
 /* Session spine */
 .spine {
   width: 200px;
@@ -739,8 +943,11 @@ textarea::placeholder { color: var(--muted); }
 }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-@media (max-width: 860px) {
+@media (max-width: 1100px) {
   .spine { display: none; }
+}
+@media (max-width: 860px) {
+  .sidebar { display: none; }
   .tagline { display: none; }
   .starter-grid { grid-template-columns: 1fr; }
   .mode-desc { display: none; }
@@ -775,6 +982,27 @@ textarea::placeholder { color: var(--muted); }
 </div>
 
 <div class="layout">
+  <div class="sidebar">
+    <div class="sidebar-section projects">
+      <div class="sidebar-head">
+        <span>Projects</span>
+        <button class="sidebar-add" onclick="newProject()" title="New project">+</button>
+      </div>
+      <div id="projects-list"></div>
+    </div>
+
+    <div class="sidebar-section knowledge">
+      <div class="sidebar-head"><span>Shared knowledge</span></div>
+      <div class="know-scope">
+        <button class="active" id="scope-project" onclick="setKnowScope('project')">This project</button>
+        <button id="scope-global" onclick="setKnowScope('global')">Global</button>
+      </div>
+      <div id="know-list"></div>
+      <button class="know-add" onclick="addKnowledge()">+ Add source</button>
+      <div class="know-hint" id="know-hint">Project sources feed every council in this project. Global sources feed every project.</div>
+    </div>
+  </div>
+
   <div class="spine" id="spine">
     <div class="spine-title">Session</div>
     <div class="spine-empty" id="spine-empty">Rounds will appear here as the council convenes.</div>
@@ -845,6 +1073,34 @@ let topicCount = 0;
 let lastRound1 = {}, lastRound2 = {}, lastQuestion = '';
 let nodeCounter = 0;
 
+/* ── Projects / Chats / Knowledge state ── */
+let knowScope = 'project';
+let globalKnowledge = [
+  { icon: '🏢', name: 'Company one-pager.pdf' },
+  { icon: '🎯', name: 'Brand voice & positioning' },
+];
+let projects = [
+  {
+    id: 'p1', icon: '🗂', name: 'Nexvoka', open: true,
+    knowledge: [
+      { icon: '📄', name: 'Product spec v0.1' },
+      { icon: '🏛', name: 'Architecture notes' },
+    ],
+    chats: [
+      { id: 'c1', name: 'Pricing strategy', history: [] },
+      { id: 'c2', name: 'Launch plan', history: [] },
+    ],
+  },
+  {
+    id: 'p2', icon: '🍷', name: 'SipSense', open: false,
+    knowledge: [{ icon: '📊', name: 'B2C notes.md' }],
+    chats: [{ id: 'c3', name: 'Restaurant pilot', history: [] }],
+  },
+];
+let activeProjectId = 'p1';
+let activeChatId = 'c1';
+let chatSeq = 3, projSeq = 2;
+
 const modeDescriptions = {
   parallel:   'Independent takes — each AI answers fresh',
   debate:     'AIs push back on each other — expect friction',
@@ -883,6 +1139,138 @@ function showToast(text) {
   t.classList.add('show');
   clearTimeout(t._timer);
   t._timer = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+/* ── Projects / Chats rendering ── */
+function renderProjects() {
+  const list = $('projects-list');
+  list.innerHTML = projects.map(p => `
+    <div class="project ${p.open ? 'open' : ''} ${p.id === activeProjectId ? 'active' : ''}">
+      <div class="project-row" onclick="toggleProject('${p.id}')">
+        <span class="project-caret">▶</span>
+        <span class="project-icon">${p.icon}</span>
+        <span class="project-name">${p.name}</span>
+        <span class="project-count">${p.chats.length}</span>
+      </div>
+      <div class="chats">
+        ${p.chats.map(c => `
+          <div class="chat-row ${c.id === activeChatId ? 'active' : ''}" onclick="openChat('${p.id}','${c.id}')">
+            <span class="chat-dot"></span>
+            <span class="chat-name">${c.name}</span>
+          </div>`).join('')}
+        <div class="new-chat-row" onclick="newChat('${p.id}')"><span>+</span><span>New council chat</span></div>
+      </div>
+    </div>`).join('');
+}
+
+function toggleProject(id) {
+  const p = projects.find(x => x.id === id);
+  if (p) p.open = !p.open;
+  renderProjects();
+}
+
+function openChat(projectId, chatId) {
+  activeProjectId = projectId;
+  activeChatId = chatId;
+  const p = projects.find(x => x.id === projectId);
+  const c = p.chats.find(x => x.id === chatId);
+  // Reset the session view for this chat
+  conversationHistory = c.history || [];
+  clearBanner();
+  lastRound1 = {}; lastRound2 = {}; lastQuestion = ''; topicCount = 0;
+  resetSessionView(p, c);
+  renderProjects();
+  renderKnowledge();
+  showToast(`${p.name} · ${c.name}`);
+}
+
+function resetSessionView(p, c) {
+  // spine
+  const spine = $('spine');
+  spine.innerHTML = `<div class="spine-title">Session</div><div class="spine-empty" id="spine-empty">Rounds will appear here as the council convenes.</div>`;
+  // messages
+  const scopeLabel = `${p.name} · ${c.name}`;
+  const kCount = p.knowledge.length + globalKnowledge.length;
+  inner().innerHTML = `
+    <div class="empty-state" id="empty-state">
+      <div class="empty-mark">◈</div>
+      <div class="empty-title">${c.name}</div>
+      <div class="context-chip"><span class="cc-dot"></span>Council has access to ${kCount} knowledge source${kCount !== 1 ? 's' : ''} in ${p.name}</div>
+      <div class="empty-sub">Ask a question — the council draws on this project's shared knowledge plus any global sources, deliberates, and converges on one answer.</div>
+    </div>`;
+}
+
+function newProject() {
+  const name = prompt('Project name:');
+  if (!name) return;
+  const id = `p${++projSeq}`;
+  const cid = `c${++chatSeq}`;
+  projects.push({ id, icon: '🗂', name, open: true, knowledge: [], chats: [{ id: cid, name: 'First council chat', history: [] }] });
+  openChat(id, cid);
+}
+
+function newChat(projectId) {
+  const p = projects.find(x => x.id === projectId);
+  const name = prompt('Chat name:', `Council chat ${p.chats.length + 1}`);
+  if (!name) return;
+  const cid = `c${++chatSeq}`;
+  p.chats.push({ id: cid, name, history: [] });
+  p.open = true;
+  openChat(projectId, cid);
+}
+
+/* ── Knowledge panel ── */
+function setKnowScope(scope) {
+  knowScope = scope;
+  $('scope-project').classList.toggle('active', scope === 'project');
+  $('scope-global').classList.toggle('active', scope === 'global');
+  renderKnowledge();
+}
+
+function renderKnowledge() {
+  const list = $('know-list');
+  const p = projects.find(x => x.id === activeProjectId);
+  const items = knowScope === 'project' ? (p ? p.knowledge : []) : globalKnowledge;
+  const scopeClass = knowScope;
+  const scopeLabel = knowScope === 'global' ? 'global' : 'project';
+  if (!items.length) {
+    list.innerHTML = `<div class="know-hint">No ${scopeLabel} sources yet. Add one so the council always has this context.</div>`;
+  } else {
+    list.innerHTML = items.map(k => `
+      <div class="know-item">
+        <span class="ki-icon">${k.icon}</span>
+        <span class="ki-name">${k.name}</span>
+        <span class="ki-scope ${scopeClass}">${scopeLabel}</span>
+      </div>`).join('');
+  }
+  $('know-hint').textContent = knowScope === 'project'
+    ? 'Project sources feed every council chat in this project.'
+    : 'Global sources feed the council in every project.';
+}
+
+function addKnowledge() {
+  const name = prompt(`Add a ${knowScope} knowledge source (name):`);
+  if (!name) return;
+  const item = { icon: '📎', name };
+  if (knowScope === 'global') globalKnowledge.push(item);
+  else { const p = projects.find(x => x.id === activeProjectId); if (p) p.knowledge.push(item); }
+  renderKnowledge();
+  renderProjects();
+  // refresh context chip if on empty state
+  const p = projects.find(x => x.id === activeProjectId);
+  const c = p.chats.find(x => x.id === activeChatId);
+  if ($('empty-state') && p && c) resetSessionView(p, c);
+}
+
+/* returns the knowledge context string the council "sees" */
+function knowledgeContext() {
+  const p = projects.find(x => x.id === activeProjectId);
+  const proj = p ? p.knowledge.map(k => k.name) : [];
+  const glob = globalKnowledge.map(k => k.name);
+  const parts = [];
+  if (glob.length) parts.push(`Global knowledge sources available: ${glob.join(', ')}.`);
+  if (proj.length) parts.push(`This project's knowledge sources: ${proj.join(', ')}.`);
+  return parts.length ? `[Context the council can draw on — ${parts.join(' ')}]\n\n` : '';
 }
 
 function toggleAgent(id) {
@@ -1046,13 +1434,14 @@ async function handleSend() {
     const agent = agentList[i];
     await delay(i * 150);
     try {
+      const know = knowledgeContext();
       const history = conversationHistory.length > 1
         ? `Conversation so far:\n${conversationHistory.slice(-8).map(m => `${m.role}: ${m.content.slice(0, 800)}`).join('\n')}\n\n`
         : '';
       const others = Object.entries(responses).map(([a, r]) => `${AGENTS[a].name} just said: ${stripHtml(r)}`).join('\n');
       const ctx = others
-        ? `${history}Other council members have responded:\n${others}\n\nUser's message: ${text}`
-        : `${history}User's message: ${text}`;
+        ? `${know}${history}Other council members have responded:\n${others}\n\nUser's message: ${text}`
+        : `${know}${history}User's message: ${text}`;
       const reply = await callClaude(`${personas[agent]}\n\nMode: ${modeInstructions[currentMode]}`, ctx);
       responses[agent] = reply;
       removeTyping(agent);
@@ -1064,6 +1453,7 @@ async function handleSend() {
   }
 
   conversationHistory.push({ role: 'assistant', content: Object.entries(responses).map(([a, r]) => `${AGENTS[a].name}: ${stripHtml(r)}`).join('\n\n') });
+  saveActiveChat();
   lastRound1 = { ...responses };
   lastQuestion = text;
   showBanner();
@@ -1335,6 +1725,17 @@ function copyDoc(btn) {
     setTimeout(() => btn.textContent = 'Copy markdown', 1800);
   });
 }
+
+function saveActiveChat() {
+  const p = projects.find(x => x.id === activeProjectId);
+  if (!p) return;
+  const c = p.chats.find(x => x.id === activeChatId);
+  if (c) c.history = conversationHistory;
+}
+
+/* ── Init ── */
+renderProjects();
+renderKnowledge();
 </script>
 </body>
 </html>
